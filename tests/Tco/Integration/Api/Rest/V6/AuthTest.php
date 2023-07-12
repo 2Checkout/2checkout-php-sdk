@@ -48,9 +48,9 @@ class AuthTest extends TestCase {
     public function testGetHeaders(){
         $gmtDate = gmdate( 'Y-m-d H:i:s' );
         $string  = strlen( $this->sellerId ) . $this->sellerId . strlen( $gmtDate ) . $gmtDate;
-        $hash    = hash_hmac( 'md5', $string, $this->secretKey );
+        $hash    = hash_hmac( 'sha3-256', $string, $this->secretKey );
 
-        $expectedHeadersString = 'Content-Type: application/json'.'Accept: application/json'.'X-Avangate-Authentication: code="' . $this->sellerId . '" date="' . $gmtDate . '" hash="' . $hash . '"';
+        $expectedHeadersString = 'Content-Type: application/json'.'Accept: application/json'.'X-Avangate-Authentication: code="' . $this->sellerId . '" date="' . $gmtDate . '" hash="' . $hash . '" algo="sha3-256"';
         $actualHeaderString = implode('', $this->authTest->getHeaders());
 
         $this->assertEquals($expectedHeadersString, $actualHeaderString);
@@ -59,9 +59,9 @@ class AuthTest extends TestCase {
     public function testGetHeadersFail(){
         $gmtDate = gmdate( 'Y-m-d H:i:s' );
         $string  = strlen( $this->sellerId.'1' ) . $this->sellerId . strlen( $gmtDate ) . $gmtDate;
-        $hash    = hash_hmac( 'md5', $string, $this->secretKey );
+        $hash    = hash_hmac( 'sha3-256', $string, $this->secretKey );
 
-        $expectedHeadersString = 'Content-Type: application/json'.'Accept: application/json'.'X-Avangate-Authentication: code="' . $this->sellerId . '" date="' . $gmtDate . '" hash="' . $hash . '"';
+        $expectedHeadersString = 'Content-Type: application/json'.'Accept: application/json'.'X-Avangate-Authentication: code="' . $this->sellerId . '" date="' . $gmtDate . '" hash="' . $hash . '" algo="sha3-256"';
         $actualHeaderString = implode('', $this->authTest->getHeaders());
 
         $this->assertNotEquals($expectedHeadersString, $actualHeaderString);

@@ -29,22 +29,72 @@ final class IpnSignatureTest extends TestCase {
     }
 
     public function testAll() {
-        $this->_testIsIpnValid();
-        $this->_testCalculateIpnResponse();
+        $this->_testIsSha3IpnValid();
+        $this->_testIsSha2IpnValid();
+        $this->_testIsMd5IpnValid();
+        $this->_testCalculateSha3IpnResponse();
+        $this->_testCalculateSha2IpnResponse();
+        $this->_testCalculateMd5IpnResponse();
         $this->_testCalculateIpnResponseFailure();
     }
 
-    public function _testIsIpnValid() {
+    public function _testIsSha3IpnValid() {
         $tcoConfig = new \Tco\Source\TcoConfig($this->configArr);
         $ipnSignature = new IpnSignature($tcoConfig);
-        $isValid = $ipnSignature->isIpnValid($this->ipnParamsMockArray);
+        $params = $this->ipnParamsMockArray;
+        unset($params['SIGNATURE_SHA2_256']);
+        unset($params['HASH']);
+        $isValid = $ipnSignature->isIpnValid($params);
         $this->assertTrue($isValid);
     }
 
-    public function _testCalculateIpnResponse(){
+    public function _testIsSha2IpnValid() {
         $tcoConfig = new \Tco\Source\TcoConfig($this->configArr);
         $ipnSignature = new IpnSignature($tcoConfig);
-        $response = $ipnSignature->calculateIpnResponse($this->ipnParamsMockArray);
+        $params = $this->ipnParamsMockArray;
+        unset($params['SIGNATURE_SHA3_256']);
+        unset($params['HASH']);
+        $isValid = $ipnSignature->isIpnValid($params);
+        $this->assertTrue($isValid);
+    }
+
+    public function _testIsMd5IpnValid() {
+        $tcoConfig = new \Tco\Source\TcoConfig($this->configArr);
+        $ipnSignature = new IpnSignature($tcoConfig);
+        $params = $this->ipnParamsMockArray;
+        unset($params['SIGNATURE_SHA3_256']);
+        unset($params['SIGNATURE_SHA2_256']);
+        $isValid = $ipnSignature->isIpnValid($params);
+        $this->assertTrue($isValid);
+    }
+
+    public function _testCalculateSha3IpnResponse(){
+        $tcoConfig = new \Tco\Source\TcoConfig($this->configArr);
+        $ipnSignature = new IpnSignature($tcoConfig);
+        $params = $this->ipnParamsMockArray;
+        unset($params['SIGNATURE_SHA2_256']);
+        unset($params['HASH']);
+        $response = $ipnSignature->calculateIpnResponse($params);
+        $this->assertNotEmpty($response);
+    }
+
+    public function _testCalculateSha2IpnResponse(){
+        $tcoConfig = new \Tco\Source\TcoConfig($this->configArr);
+        $ipnSignature = new IpnSignature($tcoConfig);
+        $params = $this->ipnParamsMockArray;
+        unset($params['SIGNATURE_SHA3_256']);
+        unset($params['HASH']);        
+        $response = $ipnSignature->calculateIpnResponse($params);
+        $this->assertNotEmpty($response);
+    }
+
+    public function _testCalculateMd5IpnResponse(){
+        $tcoConfig = new \Tco\Source\TcoConfig($this->configArr);
+        $ipnSignature = new IpnSignature($tcoConfig);
+        $params = $this->ipnParamsMockArray;
+        unset($params['SIGNATURE_SHA3_256']);
+        unset($params['SIGNATURE_SHA2_256']);
+        $response = $ipnSignature->calculateIpnResponse($params);
         $this->assertNotEmpty($response);
     }
 

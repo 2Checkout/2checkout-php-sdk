@@ -29,11 +29,11 @@ class AuthApi implements Auth {
 
         $gmtDate = gmdate( 'Y-m-d H:i:s' );
         $string  = strlen( $this->sellerId ) . $this->sellerId . strlen( $gmtDate ) . $gmtDate;
-        $hash    = hash_hmac( 'md5', $string, $this->secretKey );
+        $hash    = hash_hmac( 'sha3-256', $string, $this->secretKey );
 
         $headers[] = 'Content-Type: application/json';
         $headers[] = 'Accept: application/json';
-        $headers[] = 'X-Avangate-Authentication: code="' . $this->sellerId . '" date="' . $gmtDate . '" hash="' . $hash . '"';
+        $headers[] = 'X-Avangate-Authentication: code="' . $this->sellerId . '" date="' . $gmtDate . '" hash="' . $hash . '" algo="sha3-256"';
 
         return $headers;
     }
