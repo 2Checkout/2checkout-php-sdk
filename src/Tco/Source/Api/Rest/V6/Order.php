@@ -1,5 +1,8 @@
 <?php
+
 namespace Tco\Source\Api\Rest\V6;
+
+use Tco\Exceptions\TcoException;
 
 class Order{
 
