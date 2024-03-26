@@ -8,6 +8,7 @@ require_once __DIR__ . '/../../../../Fixtures/TestsConfig.php';
 
 use PHPUnit\Framework\TestCase;
 use Tco\Source\Api\Rest\V6\ApiCore;
+
 use Tco\Source\TcoConfig;
 use Tco\Source\Api\Auth\AuthFactory;
 
@@ -138,7 +139,7 @@ final class ApiCoreTest extends TestCase {
     public function testPut() {
         $productCode = TestsConfig::PRODUCT_CODE;
         $auth = (new AuthFactory($this->tcoConfig))->getAuth();
-        $apiCore = new ApiCore( $this->tcoConfig, $auth );1
+        $apiCore = new ApiCore( $this->tcoConfig, $auth );
         $endpoint = "/products/$productCode/";
         $getProduct = $apiCore->call( $endpoint, '[]', 'GET' );
         $getProduct['ProductName'] = uniqid();
