@@ -1,10 +1,10 @@
 <?php
 require_once __DIR__ . '/../../../autoloader.php';
+require_once __DIR__ . '/../Fixtures/TestsConfig.php';
+require_once __DIR__ . '/../Fixtures/Tokens.php';
 
 use Tco\TwocheckoutFacade;
 use PHPUnit\Framework\TestCase;
-require_once __DIR__ . '/../Fixtures/TestsConfig.php';
-require_once __DIR__ . '/../Fixtures/Tokens.php';
 
 class TwocheckoutFacadeTest extends TestCase {
 

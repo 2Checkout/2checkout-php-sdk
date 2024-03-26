@@ -170,7 +170,7 @@ class SubscriptionTest extends TestCase {
                         'CardType'           => 'VISA',
                         'Vendor3DSReturnURL' => 'www.success.com',
                         'Vendor3DSCancelURL' => 'www.fail.com',
-                        'ExpirationYear'     => '2023',
+                        'ExpirationYear'     => '2032',
                         'ExpirationMonth'    => '12',
                         'CCID'               => '123',
                         'HolderName'         => 'John Doe',

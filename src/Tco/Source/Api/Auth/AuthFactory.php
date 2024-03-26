@@ -1,7 +1,6 @@
 <?php
 
 namespace Tco\Source\Api\Auth;
-
 use Tco\Source\TcoConfig;
 
 

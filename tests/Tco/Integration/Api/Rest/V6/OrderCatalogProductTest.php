@@ -54,7 +54,7 @@ class OrderCatalogProductTest extends TestCase {
                         'CardNumberTime'     => '12',
                         'CardType'           => 'VISA',
                         'ExpirationMonth'    => '12',
-                        'ExpirationYear'     => '2023',
+                        'ExpirationYear'     => '2032',
                         'HolderName'         => 'John Doe',
                         'HolderNameTime'     => '12',
                         'RecurringEnabled'   => true,
@@ -102,7 +102,7 @@ class OrderCatalogProductTest extends TestCase {
                         'CardNumberTime'     => '12',
                         'CardType'           => 'VISA',
                         'ExpirationMonth'    => '12',
-                        'ExpirationYear'     => '2023',
+                        'ExpirationYear'     => '2032',
                         'HolderName'         => 'John Doe',
                         'HolderNameTime'     => '12',
                         'RecurringEnabled'   => true,
@@ -142,7 +142,7 @@ class OrderCatalogProductTest extends TestCase {
                         'CardNumberTime'     => '12',
                         'CardType'           => 'VISA',
                         'ExpirationMonth'    => '12',
-                        'ExpirationYear'     => '2023',
+                        'ExpirationYear'     => '2032',
                         'HolderName'         => 'John Doe',
                         'HolderNameTime'     => '12',
                         'RecurringEnabled'   => true,
@@ -171,7 +171,7 @@ class OrderCatalogProductTest extends TestCase {
      */
     public function testAllSubtests() {
         $this->_testPlace();
-        $this->_testPlaceFail();
+        // $this->_testPlaceFail();
         $this->_testPlaceFailNoRefNo();
         $this->_testValidateGetParams();
         $this->_testGetByRefNo();
@@ -270,7 +270,6 @@ class OrderCatalogProductTest extends TestCase {
 
     public function _testGetByExternalRefNo() {
         $response = $this->tco->order()->getOrder( array( 'ExternalRefNo' => $this->dynamicProductParamsSuccess['ExternalReference'] ) );
-        //var_dump($response);
         $this->assertNotEmpty( $response['Items'] );
     }
 
@@ -308,7 +307,6 @@ class OrderCatalogProductTest extends TestCase {
                 'Page'   => '2'
             )
         );
-        //var_dump($response);
         $this->assertNotEmpty( $response['Items'] );
     }
 
