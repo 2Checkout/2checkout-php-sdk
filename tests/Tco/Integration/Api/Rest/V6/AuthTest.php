@@ -6,8 +6,6 @@ use PHPUnit\Framework\TestCase;
 
 require_once __DIR__ . '/../../../../Fixtures/TestsConfig.php';
 
-
-
 class AuthTest extends TestCase {
     public $authTest;
     public $sellerId;

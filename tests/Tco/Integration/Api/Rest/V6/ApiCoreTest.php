@@ -11,6 +11,7 @@ use Tco\Source\Api\Rest\V6\ApiCore;
 use Tco\Source\TcoConfig;
 use Tco\Source\Api\Auth\AuthFactory;
 
+
 final class ApiCoreTest extends TestCase {
 
     private $tcoConfig;
@@ -86,7 +87,7 @@ final class ApiCoreTest extends TestCase {
                         'CardType'           => 'VISA',
                         'Vendor3DSReturnURL' => 'www.success.com',
                         'Vendor3DSCancelURL' => 'www.fail.com',
-                        'ExpirationYear'     => '2023',
+                        'ExpirationYear'     => '2032',
                         'ExpirationMonth'    => '12',
                         'CCID'               => '123',
                         'HolderName'         => 'John Doe',
@@ -96,6 +97,8 @@ final class ApiCoreTest extends TestCase {
                     ),
             ),
     );
+
+    private $updateProductParams = array('ProductName' => 'test');
 
     public function __toString() {
         return 'ApiCoreTest';
@@ -113,7 +116,8 @@ final class ApiCoreTest extends TestCase {
 
     public function testAllSubtests() {
         $this->testCheckAttributes();
-        $this->testCall();
+        $this->testPost();
+        $this->testPut();
     }
 
     public function testCheckAttributes() {
@@ -122,12 +126,25 @@ final class ApiCoreTest extends TestCase {
         $this->assertClassHasAttribute( 'auth', 'Tco\Source\Api\Rest\V6\ApiCore' );
     }
 
-    public function testCall() {
+    public function testPost() {
         $auth = (new AuthFactory($this->tcoConfig))->getAuth();
         $apiCore = new ApiCore( $this->tcoConfig, $auth );
         //Just for testing purposes we will request all regular subscriptions.
         $endpoint = '/orders/';
         $response = $apiCore->call( $endpoint, $this->dynamicProductParamsSuccess );
         $this->assertArrayHasKey( 'RefNo', $response );
+    }
+
+    public function testPut() {
+        $productCode = TestsConfig::PRODUCT_CODE;
+        $auth = (new AuthFactory($this->tcoConfig))->getAuth();
+        $apiCore = new ApiCore( $this->tcoConfig, $auth );1
+        $endpoint = "/products/$productCode/";
+        $getProduct = $apiCore->call( $endpoint, '[]', 'GET' );
+        $getProduct['ProductName'] = uniqid();
+        $putResponse = $apiCore->call( $endpoint, $getProduct, 'PUT' );
+        $getProduct2 = $apiCore->call( $endpoint, '[]', 'GET' );
+        $this->assertEquals( $getProduct2['ProductName'], $getProduct['ProductName']);
+        $this->assertTrue($putResponse);
     }
 }

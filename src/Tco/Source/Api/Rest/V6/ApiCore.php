@@ -56,6 +56,9 @@ class ApiCore {
             if ( $method === 'POST' ) {
                 curl_setopt( $ch, CURLOPT_POST, true );
                 curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $params, JSON_UNESCAPED_UNICODE ) );
+            } elseif ( $method === 'PUT' ) {
+                curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, "PUT" );
+                curl_setopt( $ch, CURLOPT_POSTFIELDS, json_encode( $params, JSON_UNESCAPED_UNICODE ) );
             }
             $response = curl_exec( $ch );
             curl_close( $ch );

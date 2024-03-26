@@ -2,7 +2,6 @@
 
 namespace Tco\Source;
 use Tco\Exceptions\TcoException;
-use Tco\Exceptions\TcoExceptionMsgs;
 
 class TcoConfig {
 
